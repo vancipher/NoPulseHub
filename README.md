@@ -9,9 +9,7 @@
 
 > Source: [cyberxsec.me/Projects/detail.html?slug=NoPulseHub](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)
 
-📎 **Full slide deck + PDF:** [`docs/PRESENTATION.md`](docs/PRESENTATION.md) · [`docs/NoPulseHUB.pdf`](docs/NoPulseHUB.pdf) (32 slides with architecture, configs, and diagrams)
-
-![NoPulse-HUB intro slide](docs/slides/IMG_2083.JPEG)
+📎 **Extended documentation (from original presentation, text only):** [`docs/PROJECT-GUIDE.md`](docs/PROJECT-GUIDE.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 
 ---
 
@@ -33,7 +31,7 @@
 14. [Challenges, Lessons & Weaknesses](#challenges-lessons--weaknesses)
 15. [User Recommendations](#user-recommendations)
 16. [Configuration Files](#configuration-files)
-17. [Presentation & Slides](#presentation--slides)
+17. [Extended documentation](#extended-documentation)
 18. [Repository Note](#repository-note)
 19. [Legal Notice](#legal-notice)
 
@@ -471,15 +469,14 @@ Automated config install: [`scripts/install.sh`](scripts/install.sh)
 
 ---
 
-## Presentation & Slides
+## Extended documentation
 
-The complete NoPulse-HUB documentation deck (Arabic + English technical content) is included in this repo:
+The original Cyber X presentation content is written out in full (no image files in the repo):
 
-| Resource | Description |
+| Document | Contents |
 |---|---|
-| [`docs/PRESENTATION.md`](docs/PRESENTATION.md) | Slide index, topology summary, embedded gallery |
-| [`docs/NoPulseHUB.pdf`](docs/NoPulseHUB.pdf) | Full PDF export |
-| [`docs/slides/`](docs/slides/) | 32 JPEG slides — intro, sysctl, nftables, DNS, SSH, WireGuard |
+| [`docs/PROJECT-GUIDE.md`](docs/PROJECT-GUIDE.md) | Complete walkthrough — threat model, all 6 security layers, DNS DoH workaround, kill-switch, netplan, challenges, deploy checklist |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Diagrams and layer reference |
 
 **Tested deployment:** Raspberry Pi 3 with **external WiFi antenna** — configs validated on multiple machines before live Pi deployment.
 
