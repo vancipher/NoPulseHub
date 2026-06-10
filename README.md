@@ -488,13 +488,21 @@ The **full runtime environment and live credentials live on the Raspberry Pi har
 
 ---
 
+## License
+
+**Van Cipher Restricted License v1.0** — see [LICENSE](LICENSE).
+
+You may read this repo on GitHub for learning. **Any use, deployment, or redistribution of code or configs requires written permission** from [Abdullah Y. Habash (@vancipher)](https://github.com/vancipher).
+
+---
+
 ## Legal Notice
 
 ```
-⚠️  EDUCATIONAL / AUTHORIZED USE ONLY
+⚠️  AUTHORIZED USE ONLY — PERMISSION REQUIRED FOR DEPLOYMENT
 ```
 
-Deploy only on networks and devices you own or have written permission to configure. VPN usage and network modifications must comply with your jurisdiction and provider terms. You are solely responsible for how you use this system.
+Even with permission, deploy only on networks and devices you own or are authorized to configure. VPN usage and network modifications must comply with your jurisdiction and provider terms.
 
 ---
 
