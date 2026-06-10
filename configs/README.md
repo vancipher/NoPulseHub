@@ -1,31 +1,55 @@
 # Configuration Files
 
-These files were recovered from the [NoPulseHub project page](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub). The live deployment runs on a **Raspberry Pi 3** — this repo holds the documented configs, not the full runtime environment.
+Complete configuration files from the [NoPulse-HUB Cyber X project page](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub).
 
-## Raspberry Pi install paths
+The live deployment runs on **Raspberry Pi 3** hardware. This directory contains the documented configs recovered from the official project write-up.
+
+## Install paths on Raspberry Pi
 
 | File in repo | Target path on Pi |
 |---|---|
 | `netplan-network.yaml` | `/etc/netplan/01-nopulse.yaml` |
 | `sysctl.conf` | Append to `/etc/sysctl.conf`, then `sudo sysctl -p` |
-| `nftables.conf` | `/etc/nftables.conf` — enable with `sudo systemctl enable --now nftables` |
+| `nftables.conf` | `/etc/nftables.conf` |
 | `unbound.conf` | `/etc/unbound/unbound.conf.d/nopulse.conf` |
-| `sshd_config` | Merge into `/etc/ssh/sshd_config.d/nopulse.conf` |
-| `wireguard-wg0.conf` | `/etc/wireguard/wg0.conf` — **add your private key locally, never commit it** |
+| `sshd_config` | `/etc/ssh/sshd_config.d/nopulse.conf` |
+| `wireguard-wg0.conf` | `/etc/wireguard/wg0.conf` |
 
-## Before applying
+## Required services
 
-1. Replace `YOUR_WIFI_PSK` in `netplan-network.yaml` with your access-point password.
-2. Replace `[PRIVATE_KEY_HERE]` in `wireguard-wg0.conf` with your WireGuard private key (on the Pi only).
-3. Update `AllowUsers` in `sshd_config` to your Pi username.
-4. Review ProtonVPN peer/endpoint values — rotate if this is a production deployment.
+```bash
+sudo apt update
+sudo apt install -y nftables fail2ban wireguard unbound
+# Pi-hole and DNSCrypt-proxy: install per their official guides
+```
 
-## Services stack (on Pi)
+## Apply configuration
 
-- **Pi-hole** — network-wide ad/tracker blocking
-- **Unbound** — local recursive DNS resolver (port 5335)
-- **DNSCrypt-proxy** — encrypted upstream DNS (DoH, port 5353)
-- **WireGuard** — VPN tunnel with kill-switch
-- **nftables** — firewall (default DROP policy)
-- **Fail2Ban** — SSH brute-force protection
-- **SSH** — key-only auth on port 2222
+```bash
+sudo cp netplan-network.yaml /etc/netplan/01-nopulse.yaml
+sudo cat sysctl.conf >> /etc/sysctl.conf
+sudo cp nftables.conf /etc/nftables.conf
+sudo cp unbound.conf /etc/unbound/unbound.conf.d/nopulse.conf
+sudo cp sshd_config /etc/ssh/sshd_config.d/nopulse.conf
+sudo cp wireguard-wg0.conf /etc/wireguard/wg0.conf
+
+sudo netplan apply
+sudo sysctl -p
+sudo systemctl enable --now nftables fail2ban wg-quick@wg0
+sudo systemctl restart ssh unbound
+```
+
+## Before going live
+
+1. Set your WireGuard **private key** in `wireguard-wg0.conf` (on the Pi only — never commit)
+2. Update `AllowUsers` in `sshd_config` to your Pi username
+3. Verify ProtonVPN peer endpoint is current for your account
+4. Test the **kill-switch**: stop WireGuard and confirm no traffic leaks on `wlan0`
+
+## DNS stack ports
+
+| Service | Listen address |
+|---|---|
+| Pi-hole | `0.0.0.0:53` |
+| Unbound | `127.0.0.1:5335` |
+| DNSCrypt-proxy | `127.0.0.1:5353` |

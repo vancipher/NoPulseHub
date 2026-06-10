@@ -26,4 +26,4 @@ network:
           hidden: true
           auth:
             key-management: "psk"
-            password: "YOUR_WIFI_PSK"  # Set on the Pi — see Cyber X project page for demo value
+            password: "bce14c304c20a03643b3f2cced9785af628atfbfbcS53cS8ba2b63dc2d09d8449"

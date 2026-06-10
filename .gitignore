@@ -1,4 +1,5 @@
 # Temp / extraction artifacts
+_work/
 _api_raw.json
 _content.html
 _extract.py
