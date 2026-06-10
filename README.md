@@ -452,17 +452,17 @@ See [`configs/README.md`](configs/README.md) for install instructions.
 ### Quick deploy checklist
 
 ```bash
-# On Raspberry Pi 3
-sudo apt install pi-hole unbound dnscrypt-proxy wireguard nftables fail2ban
+# On Raspberry Pi 3 — clone repo, then:
+sudo bash scripts/install.sh
 
-# Copy configs to paths above
-sudo netplan apply
-sudo sysctl -p
-sudo systemctl enable --now wg-quick@wg0 nftables fail2ban
+sudo apt install pi-hole unbound dnscrypt-proxy wireguard fail2ban
+sudo systemctl enable --now wg-quick@wg0
 
 # Test kill-switch: stop WireGuard, confirm no cleartext traffic leaks
 sudo systemctl stop wg-quick@wg0
 ```
+
+Automated config install: [`scripts/install.sh`](scripts/install.sh)
 
 ---
 
