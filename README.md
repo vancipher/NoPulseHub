@@ -2,9 +2,10 @@
 
 **Personal internet protection platform — a Raspberry Pi security router that combines network hardening, encrypted DNS, VPN tunneling, and a kill-switch in one integrated system.**
 
-[![Cyber X Project](https://img.shields.io/badge/Project-Cyber%20X-purple?style=flat-square)](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)
+[![Cyber X Project](https://img.shields.io/badge/Project%20Page-cyberxsec.me-purple?style=for-the-badge)](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)
+[![GitHub](https://img.shields.io/badge/Code-GitHub-black?style=flat-square)](https://github.com/vancipher/NoPulseHub)
 
-**Author:** Abdullah Yasir · **Developer:** Van De Cipher · **Team:** [Cyber X](https://cyberxsec.me/)
+**Author:** Abdullah Yasir · **Developer:** Van De Cipher · **Team:** [Cyber X](https://cyberxsec.me/) · **[Read on Cyber X →](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)**
 
 > Source: [cyberxsec.me/Projects/detail.html?slug=NoPulseHub](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)
 
