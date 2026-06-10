@@ -9,6 +9,10 @@
 
 > Source: [cyberxsec.me/Projects/detail.html?slug=NoPulseHub](https://cyberxsec.me/Projects/detail.html?slug=NoPulseHub)
 
+📎 **Full slide deck + PDF:** [`docs/PRESENTATION.md`](docs/PRESENTATION.md) · [`docs/NoPulseHUB.pdf`](docs/NoPulseHUB.pdf) (32 slides with architecture, configs, and diagrams)
+
+![NoPulse-HUB intro slide](docs/slides/IMG_2083.JPEG)
+
 ---
 
 ## Table of Contents
@@ -29,8 +33,9 @@
 14. [Challenges, Lessons & Weaknesses](#challenges-lessons--weaknesses)
 15. [User Recommendations](#user-recommendations)
 16. [Configuration Files](#configuration-files)
-17. [Repository Note](#repository-note)
-18. [Legal Notice](#legal-notice)
+17. [Presentation & Slides](#presentation--slides)
+18. [Repository Note](#repository-note)
+19. [Legal Notice](#legal-notice)
 
 ---
 
@@ -463,6 +468,20 @@ sudo systemctl stop wg-quick@wg0
 ```
 
 Automated config install: [`scripts/install.sh`](scripts/install.sh)
+
+---
+
+## Presentation & Slides
+
+The complete NoPulse-HUB documentation deck (Arabic + English technical content) is included in this repo:
+
+| Resource | Description |
+|---|---|
+| [`docs/PRESENTATION.md`](docs/PRESENTATION.md) | Slide index, topology summary, embedded gallery |
+| [`docs/NoPulseHUB.pdf`](docs/NoPulseHUB.pdf) | Full PDF export |
+| [`docs/slides/`](docs/slides/) | 32 JPEG slides — intro, sysctl, nftables, DNS, SSH, WireGuard |
+
+**Tested deployment:** Raspberry Pi 3 with **external WiFi antenna** — configs validated on multiple machines before live Pi deployment.
 
 ---
 
