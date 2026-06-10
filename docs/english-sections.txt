@@ -1,0 +1,141 @@
+Explanation of Network Configuration:
+
+This configuration sets up the Raspberry Pi with two network interfaces:
+1. eth0 (Ethernet): Acts as the LAN interface with static IP 10.8.0.1/24
+2. wlan0 (WiFi): Connects to the main internet router with static IP 192.168.0.50/24
+
+Key points:
+- No DHCP on eth0 (we'll handle DHCP for connected devices)
+- Static IP addressing for both interfaces
+- Default gateway via the main router (192.168.0.1)
+- Google DNS (8.8.8.8) as fallback nameservers
+- Hidden WiFi network connection
+
+The network path is: Laptop → eth0 (10.8.0.1) → Pi processing → wlan0 → Internet
+
+---
+
+The firewall uses nftables, which is the modern replacement for iptables. It's faster, more flexible, and can handle both IPv4 and IPv6 in the same table.
+
+Main chains and their functions:
+
+1. INPUT Chain: Controls incoming connections to the Pi
+   - Default policy: DROP (deny everything unless explicitly allowed)
+   - Allows established/related connections
+   - Allows loopback traffic
+   - Allows ping only from LAN (eth0)
+   - Allows SSH on port 2222 from both interfaces
+   - Allows DNS queries from LAN
+   - Allows HTTP/HTTPS for Pi-hole admin interface
+   - Logs and drops all other input
+
+2. FORWARD Chain: Controls traffic forwarding between interfaces
+   - Default policy: DROP
+   - Allows established/related connections
+   - Allows LAN → VPN traffic (eth0 → wg0)
+   - Allows LAN → WAN traffic (eth0 → wlan0) as fallback
+   - Logs and drops all other forwarding
+   - Contains the kill-switch logic
+
+3. OUTPUT Chain: Controls outgoing traffic from the Pi
+   - Default policy: ACCEPT
+   - Explicitly allows DNS over HTTPS on port 443
+
+4. IPv6 Chains: Completely blocks all IPv6 traffic (input, forward, output)
+
+5. WireGuard Tables: Special tables created by wg-quick for managing WireGuard packets
+
+---
+
+SSH Security Configuration:
+
+The SSH daemon is configured with maximum security in mind:
+
+1. Port Change: Moved from default port 22 to 2222
+   - Reduces automated bot attacks that only scan port 22
+   - Adds a layer of security through obscurity
+
+2. Single User Only: AllowUsers cipher
+   - Only one user can login via SSH
+   - Even if attacker knows the port, they don't know the username
+
+3. Public Key Authentication Only: PasswordAuthentication no
+   - Completely disables password login
+   - Prevents brute-force attacks
+   - Login is only possible with the private key
+
+4. Root Login Disabled: PermitRootLogin no
+   - Root is the most dangerous account
+   - Prevents direct root access via SSH
+
+5. X11 Forwarding Disabled: X11Forwarding no
+   - X11 can leak graphical data and be used in MITM attacks
+   - Not needed for a server
+
+6. Ed25519 Keys Only: PubkeyAcceptedKeyTypes ssh-ed25519
+   - More secure and faster than traditional RSA
+   - Smaller key sizes with better security
+
+7. Fail2Ban Integration:
+   - Monitors /var/log/auth.log for failed login attempts
+   - Bans IP addresses after 3 failed attempts within 10 minutes
+   - Ban duration: 1 hour
+   - Automatically blocks brute-force attacks
+
+This configuration makes SSH attacks practically impossible over the internet.
+
+---
+
+Future Planned Features and Enhancements:
+
+1. ProxyChains Integration
+   - Chain of three proxies for additional anonymity
+   - Makes tracking much more difficult
+   - Different proxy types (SOCKS5, HTTP, etc.)
+
+2. RAM-Only Browser Cache
+   - Browser cache stored only in RAM
+   - Automatically cleared on shutdown
+   - Prevents browsing data leakage on disk
+
+3. MAC Address Randomization
+   - Randomize MAC address periodically
+   - Makes device tracking on local network harder
+   - Different MAC for different networks
+
+4. Anti-Fingerprinting Measures
+   - Modify system and browser settings to reduce digital fingerprint uniqueness
+   - Spoof browser characteristics
+   - Randomize system parameters
+
+5. Intrusion Detection System (Suricata)
+   - Monitor network traffic for attack patterns
+   - Real-time alerting for suspicious activities
+   - Log analysis and reporting
+
+6. Honeypot (Cowrie)
+   - Deceptive system to attract attackers
+   - Learn attack methods and patterns
+   - Distract from real systems
+
+7. Tor Integration
+   - Option to route some traffic through Tor network
+   - Additional anonymity layer
+   - Selective routing for specific applications
+
+8. DNS over TLS Support
+   - Additional encryption layer for DNS
+   - Alternative to DoH
+   - Broader compatibility
+
+9. Traffic Analysis System
+   - Monitor and report suspicious traffic patterns
+   - Bandwidth usage analytics
+   - Connection logging (optional)
+
+10. Secure Backup System
+    - Encrypted backups of configurations and keys
+    - Automatic backup scheduling
+    - Off-site backup options
+
+These features will make the system more comprehensive but require additional testing and development.

@@ -1,0 +1,14 @@
+# Temp / extraction artifacts
+_api_raw.json
+_content.html
+_extract.py
+
+# Secrets (keep on Raspberry Pi only)
+configs/wireguard-wg0.local.conf
+*.key
+*.pem
+.env
+
+# OS
+.DS_Store
+Thumbs.db

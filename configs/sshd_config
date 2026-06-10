@@ -1,0 +1,23 @@
+Port 2222
+AllowUsers cipher
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitRootLogin no
+X11Forwarding no
+PrintMotd no
+UsePAM yes
+
+# Key Types (Ed25519 only)
+PubkeyAcceptedKeyTypes ssh-ed25519
+HostKeyAlgorithms ssh-ed25519
+
+# Authentication
+LoginGraceTime 2m
+StrictModes yes
+MaxAuthTries 3
+MaxSessions 2
+
+# Additional security
+ClientAliveInterval 300
+ClientAliveCountMax 2
+UseDNS no
